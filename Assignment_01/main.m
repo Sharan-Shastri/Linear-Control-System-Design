@@ -79,13 +79,13 @@ double(eig(Av))
 
 %% 1.e
 
-Cv2 = [jacobian(x(:,1), [w1(1);w2(1)]).';
+Ce = [jacobian(x(:,1), [w1(1);w2(1)]).';
        repl(Cb) ];
-Dv2 = [0*zeros(size(u.'));
+De = [0*zeros(size(u.'));
        0*zeros(size(u.'));
        repl(Db)]
 
-SS = ss(Av,Bv,double(Cv2),double(Dv2))
+SS = ss(Av,Bv,double(Ce),double(De))
 
 s = tf('s')
 I = eye(size(Av));
@@ -146,6 +146,8 @@ fprintf('G_(w_3,v_a)\n')
 tf12 = minreal(G(2,1),1e-3)
 pole(tf12)
 zero(tf12)
+
+tzero(Av,Bv(:,1),Cv,Dv(:,1))
 
 
 function [A,b] = get_state_space(eqs, xdot, x, u)

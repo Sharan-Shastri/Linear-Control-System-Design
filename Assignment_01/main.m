@@ -133,7 +133,6 @@ G = Cv*inv(s*I-Av)*Bv + Dv
 zpk(G(:,1))
 
 tzero(G(:,1))
-1;
 
 function [A,b] = get_state_space(eqs, xdot, x, u)
     A = -jacobian(eqs, xdot) \ jacobian(eqs, x);

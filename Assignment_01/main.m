@@ -134,6 +134,9 @@ zpk(G(:,1))
 
 tzero(G(:,1))
 
+
+%% Help functions
+
 function [A,b] = get_state_space(eqs, xdot, x, u)
     A = -jacobian(eqs, xdot) \ jacobian(eqs, x);
     b = -jacobian(eqs, xdot) \ jacobian(eqs, u);

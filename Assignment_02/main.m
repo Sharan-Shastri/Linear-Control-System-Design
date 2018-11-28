@@ -80,9 +80,9 @@ rref(W_o1)
 rref(W_o2)
 
 
-
 % Question b)
 
+svd([Av;C2])        % PHB test with lambda=0, results in rank<=4 (rank deficient)
 
 
 % Question c)
@@ -104,24 +104,42 @@ svd(W_r)
 svd(W_o1)
 svd(W_o2)
 
-[Abar,Bbar,Cbar,T,k] = obsvf(Av,Bv,C2v)
+kappa = @(W) max(svd(W))/min(svd(W));
 
-svd_W_r = svd(W_r)
-s_max_P = max(svd_W_r)
-s_min_P = min(svd_W_r)
-Pc = s_max_P/s_min_P
+kappa(W_r)
+kappa(W_o1)
+kappa(W_o2)
+
+eig(Av)
+
+
+svd([Av;C2])        % PHB test with lambda=0, results in rank<=4 (rank deficient)
 
 
 % Question e)
 
 syms s t
-matrix = inv(eye(size(Av))*s-Av)
-exp_At = vpa(ilaplace(matrix))
+matrix = inv(eye(size(Av))*s-Av);
+exp_At = vpa(ilaplace(matrix));
 
-Bd = int(exp_At,t,0,1e-3)*Bv
+Bd = int(exp_At,t,0,1e-3)*Bv;
 
 sst = ss(Av,Bv,C1v,0);
 c2d(sst,1e-3,'zoh')
+
+Ts=0.001;
+Ad=expm(Av*Ts);
+
+
+% Question f)
+
+svd(ctrb(Ad,Bd))
+svd(obsv(Ad,C1v))
+svd(obsv(Ad,C2v))
+
+abs(eig(Ad))
+
+
 
 %% Help functions
 

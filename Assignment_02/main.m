@@ -82,7 +82,7 @@ rref(W_o2)
 
 % Question b)
 
-svd([Av;C2])        % PHB test with lambda=0, results in rank<=4 (rank deficient)
+svd([Av;C2])        % PBH test with lambda=0, results in rank<=4 (rank deficient)
 
 
 % Question c)
@@ -113,7 +113,13 @@ kappa(W_o2)
 eig(Av)
 
 
-svd([Av;C2])        % PHB test with lambda=0, results in rank<=4 (rank deficient)
+svd([Av;C2v])        % PBH test with lambda=0, results in rank<=4 (rank deficient)
+
+% PBH test
+rank([Av, Bv])
+rank([Av;C1v])
+rank([Av;C2v])
+
 
 
 % Question e)

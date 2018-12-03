@@ -21,5 +21,6 @@ K_I = zeros(2);
 V_K = 0;
 
 % Output vector is \eps and \lambda C is 2x6
-C = [1,0,0,0,0,0;0,0,1,0,0,0]
+C = [1,0,0,0,0,0;
+     0,0,1,0,0,0];
 K_r = inv(C*inv(-A+B*K)*B);

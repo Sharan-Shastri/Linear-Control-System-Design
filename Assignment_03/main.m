@@ -184,12 +184,19 @@ eig(Ad-L_kalman*C1v)
 
 x0 = [0 0 0 0 0]';
 
+C1v_I = [1 0];
+C1v_fb = C1v_I*C1v;
+
 % Set extended system model
-Ad_e = [Ad  0*Ad*C1v';
-       -C1v eye(size(C1v,1))];
+Ad_e = [Ad  0*Ad*C1v_fb';
+       -C1v_fb eye(size(C1v_fb,1))];
 Bd_e = [Bd;
-        0*(C1v*Bd)];
-C1v_e= [C1v 0*(C1v*C1v')];
+        0*(C1v_fb*Bd)];
+C1v_e= [C1v_fb 0*(C1v_fb*C1v_fb')];
+
+svd_pos = svd(ctrb(Ad_e,Bd_e));
+cond_number = max(svd_pos)/min(svd_pos)
+
 
 sysmodel_e = ss(Ad_e,Bd_e,C1v_e, 0, Ts);
 
@@ -199,8 +206,8 @@ Nctrb = sum(k);
 eig(Abar(1:end-Nctrb,1:end-Nctrb));
 
 % Calculate LQI controller
-Qx = diag([1 1 10 10 1 55 55])*0.001;
-Qu = diag([100000 100000]);
+Qx = diag([1 1 10 0.001 1 0.001]);
+Qu = diag([2000 1000]);
 [Klqr,S,e] = dlqr(Ad_e, Bd_e, Qx, Qu);
 
 Klqr
@@ -209,6 +216,7 @@ Klqr
 K_fb  = Klqr(:,1:length(Ad));
 K_I = Klqr(:,length(Ad)+1:end)*20;
 % K_I(:,1) = 0;
+
 
 
 %% Help functions

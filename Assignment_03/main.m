@@ -184,7 +184,7 @@ eig(Ad-L_kalman*C1v)
 
 x0 = [0 0 0 0 0]';
 
-C1v_I = [1 0];
+C1v_I = [1 1];
 C1v_fb = C1v_I*C1v;
 
 % Set extended system model
@@ -207,7 +207,7 @@ eig(Abar(1:end-Nctrb,1:end-Nctrb));
 
 % Calculate LQI controller
 Qx = diag([1 1 10 0.001 1 0.001]);
-Qu = diag([2000 1000]);
+Qu = diag([2 2])*1e6;
 [Klqr,S,e] = dlqr(Ad_e, Bd_e, Qx, Qu);
 
 Klqr

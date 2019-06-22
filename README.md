@@ -14,4 +14,4 @@ Analysis of the linear state-space model:
 
 ## Asignment 3:
 
-**Kalman Filter** and **Linear-Quadratic Regulator (LQR)** design for the linear state space model.
+Kalman Filter and Linear-Quadratic Regulator (LQR) design for the linear state space model.
